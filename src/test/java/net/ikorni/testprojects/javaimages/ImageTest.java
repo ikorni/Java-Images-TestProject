@@ -1,18 +1,44 @@
 package net.ikorni.testprojects.javaimages;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * Created by Tina on 02.10.2016.
  */
 public class ImageTest {
+
+    @BeforeClass
+    public static void deleteImages() {
+        try {
+            Files.deleteIfExists(Paths.get("out/test/Java Images/blackPicture.jpg"));
+            Files.deleteIfExists(Paths.get("out/test/Java Images/resizedPictureAreaAveraging.gif"));
+            Files.deleteIfExists(Paths.get("out/test/Java Images/resizedPictureAreaAveraging.jpeg"));
+            Files.deleteIfExists(Paths.get("out/test/Java Images/resizedPictureAreaAveraging.jpg"));
+            Files.deleteIfExists(Paths.get("out/test/Java Images/resizedPictureAreaAveraging.png"));
+            Files.deleteIfExists(Paths.get("out/test/Java Images/resizedPictureFast.gif"));
+            Files.deleteIfExists(Paths.get("out/test/Java Images/resizedPictureFast.jpg"));
+            Files.deleteIfExists(Paths.get("out/test/Java Images/resizedPictureFast.png"));
+            Files.deleteIfExists(Paths.get("out/test/Java Images/resizedPictureReplicate.gif"));
+            Files.deleteIfExists(Paths.get("rout/test/Java Images/resizedPictureReplicate.jpg"));
+            Files.deleteIfExists(Paths.get("out/test/Java Images/resizedPictureReplicate.png"));
+            Files.deleteIfExists(Paths.get("out/test/Java Images/resizedPictureSmooth.gif"));
+            Files.deleteIfExists(Paths.get("out/test/Java Images/resizedPictureSmooth.jpg"));
+            Files.deleteIfExists(Paths.get("out/test/Java Images/resizedPictureSmooth.png"));
+            Files.deleteIfExists(Paths.get("out/test/Java Images/savedPicture.gif"));
+            Files.deleteIfExists(Paths.get("out/test/Java Images/savedPicture.jpg"));
+            Files.deleteIfExists(Paths.get("out/test/Java Images/savedPicture.png"));
+        } catch (IOException ioException) {
+            System.out.println("Not all images were deleted before the test-run!");
+        }
+    }
 
     @Test
     public void testUpload() {
@@ -104,6 +130,17 @@ public class ImageTest {
             ImageService.savePicture(result, "out/test/Java Images/resizedPictureAreaAveraging", "png");
             ImageService.savePicture(result, "out/test/Java Images/resizedPictureAreaAveraging", "jpg");
             ImageService.savePicture(result, "out/test/Java Images/resizedPictureAreaAveraging", "gif");
+        } catch (IOException ioException) {
+            Assert.fail("The image could not be saved");
+        }
+    }
+
+    @Test
+    public void testCreateImage() {
+        BufferedImage image = ImageService.drawImage(250, 250, Color.white);
+
+        try {
+            ImageService.savePicture(image, "out/test/Java Images/blackPicture", "jpg");
         } catch (IOException ioException) {
             Assert.fail("The image could not be saved");
         }

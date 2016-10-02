@@ -30,4 +30,13 @@ public class ImageService {
 
         return result;
     }
+
+    public static BufferedImage drawImage(int width, int height, Color color){
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        Graphics g = image.getGraphics();
+        g.setColor(color);
+        g.fillRect(0, 0, width, height);
+        return image;
+    }
+
 }
